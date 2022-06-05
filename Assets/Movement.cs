@@ -16,7 +16,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(0, 0, 20f*Time.deltaTime);
+        transform.Translate(0, 0, speed*Time.deltaTime);
 
         if (Input.touchCount > 0)
         {
