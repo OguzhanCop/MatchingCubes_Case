@@ -5,8 +5,8 @@ using DG.Tweening;
 
 public class CubeJump : MonoBehaviour
 {
-    float countCube;
-    float indexCube;
+    int countCube;
+    int indexCube;
     void Start()
     {
         DOTween.Init();
@@ -27,6 +27,6 @@ public class CubeJump : MonoBehaviour
     }
     public void fallCube()
     {
-       transform.DOLocalMoveY(countCube-indexCube, 0.4f, false);
+        match(indexCube, countCube);       
     }
 }

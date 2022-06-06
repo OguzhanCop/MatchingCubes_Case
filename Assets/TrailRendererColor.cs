@@ -11,7 +11,7 @@ public class TrailRendererColor : MonoBehaviour
         this.GetComponent<TrailRenderer>().material = color;       
 
     }
-    public void trail(GameObject cube)
+    public void trail(Transform cube)
     {
         transform.position = cube.transform.position;
         transform.parent = cube.transform;

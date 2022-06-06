@@ -15,7 +15,7 @@ public class CharJump : MonoBehaviour
     void Update()
     {
         height = PlayerPrefs.GetFloat("height");
-        Debug.Log(height);
+        
     }
     public void match(float value)
     {
@@ -31,6 +31,8 @@ public class CharJump : MonoBehaviour
    
     public void fall()
     {
-        transform.DOLocalMoveY(charPosY + height, 0.2f, false);
+        match(height);
+       
     }
+
 }

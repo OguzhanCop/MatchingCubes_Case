@@ -10,6 +10,14 @@ TagManager:
   - orange
   - yellow
   - trail
+  - blueclone
+  - orangeclone
+  - yellowclone
+  - collector
+  - ramp
+  - obstacle1x
+  - obstacle2x
+  - obstacle3x
   layers:
   - Default
   - TransparentFX
