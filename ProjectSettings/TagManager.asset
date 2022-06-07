@@ -18,6 +18,8 @@ TagManager:
   - obstacle1x
   - obstacle2x
   - obstacle3x
+  - ordergate
+  - randomgate
   layers:
   - Default
   - TransparentFX
