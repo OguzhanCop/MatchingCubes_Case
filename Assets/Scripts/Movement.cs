@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    public float speed=5;
    
     
     void Start()
@@ -14,8 +14,6 @@ public class Movement : MonoBehaviour
         
         
     }
-
-
     void Update()
     {
         transform.Translate(0, 0, speed*Time.deltaTime);
@@ -53,4 +51,24 @@ public class Movement : MonoBehaviour
         transform.DOLocalMoveY(transform.position.y - 1.5f, 1.2f, false);
 
     }
+    public void speedBoost()
+    {
+        speed = 20;
+        Invoke("speedDown", 3f);
+    }
+    public void speedDown()
+    {
+        speed = 5;
+    }
+    public void jump()
+    {
+        transform.DOLocalMoveY(transform.position.y + 10f, 5f, false);
+        Invoke("Down", 5f);
+    }
+    public void Down()
+    {
+        transform.DOLocalMoveY(transform.position.y - 10f, 5f, false);
+
+    }
+
 }

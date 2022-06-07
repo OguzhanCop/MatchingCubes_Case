@@ -22,6 +22,7 @@ public class Collector : MonoBehaviour
     public Material yellow;    
     float height;
     int k=0;
+    int randomValue;
     GameObject stack;
    
     
@@ -38,7 +39,7 @@ public class Collector : MonoBehaviour
         {
             trailfollow();
         }
-        
+        Debug.Log(Random.Range(0, cube.Count));
 
         
       
@@ -126,8 +127,7 @@ public class Collector : MonoBehaviour
                 {
                     stack = cube[k].gameObject;
                     cube[k] = cube[p];
-                    cube[p] = stack;
-                                       
+                    cube[p] = stack;                                       
                     k++;
                 }
             }
@@ -137,8 +137,7 @@ public class Collector : MonoBehaviour
                 {
                     stack = cube[k].gameObject;
                     cube[k] = cube[p];
-                    cube[p] = stack;
-                    
+                    cube[p] = stack;                    
                     k++;
                 }
             }
@@ -149,7 +148,6 @@ public class Collector : MonoBehaviour
                     stack = cube[k].gameObject;
                     cube[k] = cube[p];
                     cube[p] = stack;
-
                     k++;
                 }
             }
@@ -157,18 +155,41 @@ public class Collector : MonoBehaviour
             {
                 cube[i].GetComponent<CubeJump>().match(i, cube.Count - 1);
             }
-
-
         }
-
+        if(other.gameObject.tag == "randomgate")
+        {
+            for (int t = 0; t < cube.Count; t++)
+            {
+                randomValue = Random.Range(0, cube.Count - 1);
+                stack = cube[t];
+                cube[t] = cube[randomValue];
+                cube[randomValue] = stack;
+            }
+            for (int i = 0; i < cube.Count; i++)
+            {
+                cube[i].GetComponent<CubeJump>().match(i, cube.Count - 1);
+            }
+        }
+        if (other.gameObject.tag == "lava")
+        {
+            
+            cube[cube.Count - 1].transform.DOPunchScale(new Vector3(1, 0, 1), 0.5f, 2, 1);
+            Invoke("destroylava", 0.5f);
+        }
+        if (other.gameObject.tag == "speedboost")
+        {
+            maleParent.GetComponent<Movement>().speedBoost();
+        }
+        if (other.gameObject.tag == "jump")
+        {
+            maleParent.GetComponent<Movement>().jump();
+        }
     }
     void create(GameObject color,GameObject cubeClone)
     {
         cubeClone = Instantiate(color, transform.position, transform.rotation);
-        cubeClone.gameObject.transform.parent = transform;
-        
+        cubeClone.gameObject.transform.parent = transform; 
          
-
         cubeClone.transform.DOPunchScale(new Vector3(1,0,1), 0.5f, 2, 1);
       
         cube.Add(cubeClone);
@@ -183,7 +204,7 @@ public class Collector : MonoBehaviour
     }
     public void match(int index)
     {
-        Debug.Log(index);
+       
         Destroy(cube[cube.Count-index]);
         Destroy(cube[(cube.Count-1)-index]);
         Destroy(cube[(cube.Count-2)-index]);
@@ -218,6 +239,20 @@ public class Collector : MonoBehaviour
             trailRendererClone.GetComponent<TrailRendererColor>().color(orange);
         }
         trailRendererClone.GetComponent<TrailRendererColor>().trail(cube[cube.Count-1].transform);
+
+    }
+    public void destroylava()
+    {
+        cube[cube.Count - 1].GetComponent<CubeJump>().burn(cube[cube.Count - 1].transform.tag);
+        Destroy(cube[cube.Count - 1]);
+        cube.RemoveAt(cube.Count - 1);
+        height -= 0.5f;
+        characterRig.GetComponent<CharJump>().match(height);
+        for (int o = 0; o < cube.Count; o++)
+        {
+            cube[o].GetComponent<CubeJump>().match(o, cube.Count - 1);
+        }
+
 
     }
 

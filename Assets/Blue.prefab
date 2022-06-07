@@ -99,6 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32a6fba5bb7a3c84198bd6ce18facab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blueLava: {fileID: 7136121240437240232, guid: 8bb416001c450424db5e4f092d5b7691, type: 3}
+  orangeLava: {fileID: 1265993282734829356, guid: 2211b08fac27be54facdd7b2a5e1c3a8, type: 3}
+  yellowLava: {fileID: 2057583986804567914, guid: f26b639a29bed064286bbac3080f37bf, type: 3}
 --- !u!54 &1595638269
 Rigidbody:
   m_ObjectHideFlags: 0

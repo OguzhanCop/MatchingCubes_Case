@@ -7,6 +7,9 @@ public class CubeJump : MonoBehaviour
 {
     int countCube;
     int indexCube;
+    public GameObject blueLava;
+    public GameObject orangeLava;
+    public GameObject yellowLava;
     void Start()
     {
         DOTween.Init();
@@ -29,4 +32,16 @@ public class CubeJump : MonoBehaviour
     {
         match(indexCube, countCube);       
     }
+    public void burn(string colortag)
+    {
+        
+        if (colortag == "blueclone")
+            Instantiate(blueLava, new Vector3(transform.position.x, 0.5f, transform.position.z), transform.rotation);
+        if (colortag == "orangeclone")
+            Instantiate(orangeLava, new Vector3(transform.position.x, 0.5f, transform.position.z), transform.rotation);
+        if (colortag == "yellowclone")
+            Instantiate(yellowLava, new Vector3(transform.position.x, 0.5f, transform.position.z), transform.rotation);
+        
+    }
+    
 }

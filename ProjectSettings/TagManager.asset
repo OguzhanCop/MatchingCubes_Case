@@ -20,6 +20,9 @@ TagManager:
   - obstacle3x
   - ordergate
   - randomgate
+  - lava
+  - speedboost
+  - jump
   layers:
   - Default
   - TransparentFX
