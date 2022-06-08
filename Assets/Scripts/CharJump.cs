@@ -5,17 +5,21 @@ using DG.Tweening;
 
 public class CharJump : MonoBehaviour
 {
+    public GameObject button;
     float charPosY;
     float height;
     void Start()
     {
         DOTween.Init();
         charPosY = transform.localPosition.y;
+        
     }    
     void Update()
     {
+        Debug.Log(height);
         height = PlayerPrefs.GetFloat("height");
-        
+        PlayerDead();
+
     }
     public void match(float value)
     {
@@ -33,6 +37,17 @@ public class CharJump : MonoBehaviour
     {
         match(height);
        
+    }
+    public void PlayerDead()
+    {
+        if (height < 0)
+        {
+            Time.timeScale = 0;
+            button.GetComponent<PlayButton>().restartgame();
+
+
+        }
+          
     }
 
 }

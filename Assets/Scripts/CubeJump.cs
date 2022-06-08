@@ -17,6 +17,7 @@ public class CubeJump : MonoBehaviour
     public void match(int index,int count )
     {
         transform.DOLocalMoveY(count - index, 0.4f, false);
+      
     }
     
     public void jumpCube(int index,int count)

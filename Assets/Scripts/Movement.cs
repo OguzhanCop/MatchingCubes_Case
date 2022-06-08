@@ -54,7 +54,7 @@ public class Movement : MonoBehaviour
     public void speedBoost()
     {
         speed = 20;
-        Invoke("speedDown", 3f);
+        Invoke("speedDown", 1.5f);
     }
     public void speedDown()
     {
@@ -62,13 +62,18 @@ public class Movement : MonoBehaviour
     }
     public void jump()
     {
-        transform.DOLocalMoveY(transform.position.y + 10f, 5f, false);
-        Invoke("Down", 5f);
+        speed = 15f;
+        transform.DOLocalMoveY(transform.position.y + 10f, 1.5f, false);
+        Invoke("Down", 1.5f);
     }
     public void Down()
     {
-        transform.DOLocalMoveY(transform.position.y - 10f, 5f, false);
-
+        transform.DOLocalMoveY(transform.position.y - 10f, 1.5f, false);
+        Invoke("DownSpeed", 1.5f);
+    }
+    public void DownSpeed()
+    {
+        speed = 5;
     }
 
 }

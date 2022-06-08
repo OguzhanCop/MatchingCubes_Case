@@ -80,10 +80,11 @@ public class Collector : MonoBehaviour
         }
         if(other.gameObject.tag== "obstacle1x")
         {
-            cube[cube.Count - 1].transform.SetParent(null);
-            cube.RemoveAt(cube.Count - 1);
             height -= 0.5f;
             characterRig.GetComponent<CharJump>().match(height);
+            cube[cube.Count - 1].transform.SetParent(null);
+            cube.RemoveAt(cube.Count - 1);
+           
             for (int i = 0; i < cube.Count; i++)
             {
                 cube[i].GetComponent<CubeJump>().match(i, cube.Count - 1);
@@ -91,12 +92,13 @@ public class Collector : MonoBehaviour
         }
         if (other.gameObject.tag == "obstacle2x")
         {
-            cube[cube.Count - 1].transform.SetParent(null);
-            cube.RemoveAt(cube.Count - 1);
-            cube[cube.Count - 1].transform.SetParent(null);
-            cube.RemoveAt(cube.Count - 1);
             height -= 1f;
             characterRig.GetComponent<CharJump>().match(height);
+            cube[cube.Count - 1].transform.SetParent(null);
+            cube.RemoveAt(cube.Count - 1);
+            cube[cube.Count - 1].transform.SetParent(null);
+            cube.RemoveAt(cube.Count - 1);
+            
             for (int i = 0; i < cube.Count; i++)
             {
                 cube[i].GetComponent<CubeJump>().match(i, cube.Count - 1);
@@ -105,14 +107,15 @@ public class Collector : MonoBehaviour
         }
         if (other.gameObject.tag == "obstacle3x")
         {
-            cube[cube.Count - 1].transform.SetParent(null);
-            cube.RemoveAt(cube.Count - 1);
-            cube[cube.Count - 1].transform.SetParent(null);
-            cube.RemoveAt(cube.Count - 1);
-            cube[cube.Count - 1].transform.SetParent(null);
-            cube.RemoveAt(cube.Count - 1);
             height -= 1.5f;
             characterRig.GetComponent<CharJump>().match(height);
+            cube[cube.Count - 1].transform.SetParent(null);
+            cube.RemoveAt(cube.Count - 1);
+            cube[cube.Count - 1].transform.SetParent(null);
+            cube.RemoveAt(cube.Count - 1);
+            cube[cube.Count - 1].transform.SetParent(null);
+            cube.RemoveAt(cube.Count - 1);
+            
             for (int i = 0; i < cube.Count; i++)
             {
                 cube[i].GetComponent<CubeJump>().match(i, cube.Count - 1);
@@ -154,6 +157,7 @@ public class Collector : MonoBehaviour
             for (int i = 0; i < cube.Count; i++)
             {
                 cube[i].GetComponent<CubeJump>().match(i, cube.Count - 1);
+                k = 0;
             }
         }
         if(other.gameObject.tag == "randomgate")
@@ -255,6 +259,11 @@ public class Collector : MonoBehaviour
 
 
     }
+    public void Height()
+    {
+        height = 0;
+    }
+        
 
     
 
