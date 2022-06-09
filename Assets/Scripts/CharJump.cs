@@ -16,7 +16,7 @@ public class CharJump : MonoBehaviour
     }    
     void Update()
     {
-        Debug.Log(height);
+        
         height = PlayerPrefs.GetFloat("height");
         PlayerDead();
 

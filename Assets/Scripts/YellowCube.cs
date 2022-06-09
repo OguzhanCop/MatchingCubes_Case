@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class YellowCube : MonoBehaviour
+
 {
-    [SerializeField] int counter;
+    public GameObject instantiateDiamond;
+    public GameObject diamond;
+    int counter;
     int index;
     GameObject Collector;
     bool des = true;
     void Start()
     {
+        instantiateDiamond = GameObject.Find("InstantiateDia");
         Collector = GameObject.FindGameObjectWithTag("collector");
     }
 
@@ -39,6 +43,8 @@ public class YellowCube : MonoBehaviour
         {
             des = false;
             Collector.GetComponent<Collector>().match(index);
+            instantiateDiamond.GetComponent<Diamond>().InstantiateDiamond(this.transform);
+
 
         }
 

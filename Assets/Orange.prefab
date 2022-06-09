@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5668012017678389110}
   - component: {fileID: 5668012017678389111}
   - component: {fileID: 1102576677949636155}
-  - component: {fileID: 805529279}
   - component: {fileID: 332250755395231910}
+  - component: {fileID: 805529279}
   - component: {fileID: 5973643589338264665}
   m_Layer: 0
   m_Name: Orange
@@ -102,6 +102,19 @@ MonoBehaviour:
   blueLava: {fileID: 7136121240437240232, guid: 8bb416001c450424db5e4f092d5b7691, type: 3}
   orangeLava: {fileID: 1265993282734829356, guid: 2211b08fac27be54facdd7b2a5e1c3a8, type: 3}
   yellowLava: {fileID: 2057583986804567914, guid: f26b639a29bed064286bbac3080f37bf, type: 3}
+--- !u!114 &332250755395231910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5668012017678389109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3c0a33f7a2d03f4eb6078e0820fa3fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diamond: {fileID: 4014586731956078104, guid: e1b9baab03fc0fa489fe58062b8d062c, type: 3}
 --- !u!65 &805529279
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -115,18 +128,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &332250755395231910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5668012017678389109}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3c0a33f7a2d03f4eb6078e0820fa3fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &5973643589338264665
 Rigidbody:
   m_ObjectHideFlags: 0

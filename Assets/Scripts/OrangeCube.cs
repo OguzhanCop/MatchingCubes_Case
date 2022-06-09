@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class OrangeCube : MonoBehaviour
 {
+    public GameObject instantiateDiamond;
+    
     int counter;
     GameObject Collector;
     int index;
     bool des=true;
     void Start()
     {
+        DOTween.Init();        
         Collector = GameObject.FindGameObjectWithTag("collector");
+        instantiateDiamond = GameObject.Find("InstantiateDia");
     }
 
  
@@ -40,9 +45,12 @@ public class OrangeCube : MonoBehaviour
         {
             des = false;
             Collector.GetComponent<Collector>().match(index);
+            instantiateDiamond.GetComponent<Diamond>().InstantiateDiamond(this.transform);
+
 
         }
 
     }
+
 
 }

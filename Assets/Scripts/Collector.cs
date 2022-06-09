@@ -39,8 +39,7 @@ public class Collector : MonoBehaviour
         {
             trailfollow();
         }
-        Debug.Log(Random.Range(0, cube.Count));
-
+     
         
       
     }

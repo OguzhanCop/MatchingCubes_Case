@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BlueCube : MonoBehaviour
 {
+    public GameObject instantiateDiamond;
+    public GameObject diamond;
     int counter;
     int index;
     GameObject Collector;
@@ -11,6 +13,7 @@ public class BlueCube : MonoBehaviour
     void Start()
     {
         Collector = GameObject.FindGameObjectWithTag("collector");
+        instantiateDiamond = GameObject.Find("InstantiateDia");
     }
 
    
@@ -44,7 +47,8 @@ public class BlueCube : MonoBehaviour
         {
             des = false;
             Collector.GetComponent<Collector>().match(index);
-            
+            instantiateDiamond.GetComponent<Diamond>().InstantiateDiamond(this.transform);
+
         }
         
         
