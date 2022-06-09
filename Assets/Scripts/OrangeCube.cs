@@ -7,10 +7,10 @@ public class OrangeCube : MonoBehaviour
 {
     public GameObject instantiateDiamond;
     
-    int counter;
+    int touchSameColor;    
+    int indexList;
+    bool oneMore=true;
     GameObject Collector;
-    int index;
-    bool des=true;
     void Start()
     {
         DOTween.Init();        
@@ -21,30 +21,29 @@ public class OrangeCube : MonoBehaviour
  
     void Update()
     {
-        index = (int)transform.position.y;
-        if (counter == 2)
-            Invoke("wait", 0.2f);
-            
+        indexList = (int)transform.localPosition.y;
+        if (touchSameColor == 2)
+            Invoke("waitDestroy", 0.2f);           
 
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "orangeclone")
-            counter++;
+            touchSameColor++;
             
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "orangeclone")
-            counter--;
+            touchSameColor--;
 
     }
-    void wait()
+    void waitDestroy()
     {
-        if (des)
+        if (oneMore)
         {
-            des = false;
-            Collector.GetComponent<Collector>().match(index);
+            oneMore= false;
+            Collector.GetComponent<Collector>().SameColorCheck(indexList);
             instantiateDiamond.GetComponent<Diamond>().InstantiateDiamond(this.transform);
 
 

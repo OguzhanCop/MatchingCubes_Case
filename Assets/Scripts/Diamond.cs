@@ -27,7 +27,6 @@ public class Diamond : MonoBehaviour
     {
         scoretext.text = "" + score;
 
-
     }
 
 

@@ -40,13 +40,13 @@ public class Movement : MonoBehaviour
         pos.x = Mathf.Clamp(transform.position.x, -2, 2);
         transform.position = pos;
     }
-    public void rampUp()
+    public void RampClimp()
     {
 
         transform.DOLocalMoveY(transform.position.y + 1.5f, 1.2f, false);
-        Invoke("rampDown", 1.2f);
+        Invoke("RampLanding", 1.2f);
     }
-    public void rampDown()
+    public void RampLanding()
     {
         transform.DOLocalMoveY(transform.position.y - 1.5f, 1.2f, false);
 

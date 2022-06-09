@@ -17,26 +17,25 @@ public class CharJump : MonoBehaviour
     void Update()
     {
         
-        height = PlayerPrefs.GetFloat("height");
+        //height = PlayerPrefs.GetFloat("height");
         PlayerDead();
 
     }
     public void match(float value)
-    {
-        
+    {        
         transform.DOLocalMoveY(charPosY+value, 0.2f, false);
     }
-    public void jump( )
-    {
+    public void CharUpPos(float height )
+    {        
         transform.DOLocalMoveY(charPosY + height +1.5f, 0.4f, false);
-        Invoke("fall", 0.4f);
-
-    }
-   
-    public void fall()
+        StartCoroutine(Fall(height));
+        //Invoke("fall", 0.4f);
+    }   
+    
+    IEnumerator Fall(float height)
     {
+        yield return new WaitForSecondsRealtime(0.4f);
         match(height);
-       
     }
     public void PlayerDead()
     {

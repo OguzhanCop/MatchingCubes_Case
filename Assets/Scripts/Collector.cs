@@ -14,165 +14,65 @@ public class Collector : MonoBehaviour
     public GameObject blueCube;
     public GameObject orangeCube;
     public GameObject yellowCube;
-    GameObject blueCubeClone;
-    GameObject orangeCubeClone;
-    GameObject yellowCubeClone;
+    GameObject cubeClone;    
     public Material orange;
     public Material blue;
     public Material yellow;    
     float height;
-    int k=0;
+    int sortByIndexNumber=0;   
+    GameObject stackCubeSortBy;
     int randomValue;
-    GameObject stack;
-   
-    
+
+
 
     private void Start()
     {      
-        DOTween.Init();       
-       
+        DOTween.Init();            
     }
    void Update()
-    {       
-        PlayerPrefs.SetFloat("height", height);
+    {
+        CubeListMissingRemoveCheck();
+
         if (cube.Count > 0)
         {
             trailfollow();
         }
-     
+        if(cube.Count==0)
+            characterRig.GetComponent<CharJump>().match(0);
         
-      
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        
-        if (other.gameObject.tag == "orange")
-        {
-            height += 0.5f;
-            create(orangeCube,orangeCubeClone);
-            characterRig.GetComponent<CharJump>().jump();
-            //trailRendererClone.GetComponent<TrailRendererColor>().color(orange);
-            Destroy(other.gameObject);           
-            
-        }
-        if (other.gameObject.tag == "blue")
-        {
-            height += 0.5f;
-            create(blueCube,blueCubeClone);
-            characterRig.GetComponent<CharJump>().jump();
-            //trailRendererClone.GetComponent<TrailRendererColor>().color(blue);
+        if(other.gameObject.tag == "orange" || other.gameObject.tag == "blue" || other.gameObject.tag == "yellow")
+        {            
+            CreateCube(other.gameObject.tag);            
             Destroy(other.gameObject);
+            CharPos((float)cube.Count / 2);
+        }
+        if(other.gameObject.tag== "obstacle1x" || other.gameObject.tag == "obstacle2x" || other.gameObject.tag == "obstacle3x")
+        {
+            Obstacles(other.gameObject.tag);
 
         }
-        if (other.gameObject.tag == "yellow")
-        {
-            height += 0.5f;
-            create(yellowCube,yellowCubeClone);
-            characterRig.GetComponent<CharJump>().jump();
-            //trailRendererClone.GetComponent<TrailRendererColor>().color(yellow);
-            Destroy(other.gameObject);
-        }
+
         if (other.gameObject.tag == "ramp")
         {
-            maleParent.GetComponent<Movement>().rampUp();
-        }
-        if(other.gameObject.tag== "obstacle1x")
-        {
-            height -= 0.5f;
-            characterRig.GetComponent<CharJump>().match(height);
-            cube[cube.Count - 1].transform.SetParent(null);
-            cube.RemoveAt(cube.Count - 1);
-           
-            for (int i = 0; i < cube.Count; i++)
-            {
-                cube[i].GetComponent<CubeJump>().match(i, cube.Count - 1);
-            }
-        }
-        if (other.gameObject.tag == "obstacle2x")
-        {
-            height -= 1f;
-            characterRig.GetComponent<CharJump>().match(height);
-            cube[cube.Count - 1].transform.SetParent(null);
-            cube.RemoveAt(cube.Count - 1);
-            cube[cube.Count - 1].transform.SetParent(null);
-            cube.RemoveAt(cube.Count - 1);
-            
-            for (int i = 0; i < cube.Count; i++)
-            {
-                cube[i].GetComponent<CubeJump>().match(i, cube.Count - 1);
-            }
-
-        }
-        if (other.gameObject.tag == "obstacle3x")
-        {
-            height -= 1.5f;
-            characterRig.GetComponent<CharJump>().match(height);
-            cube[cube.Count - 1].transform.SetParent(null);
-            cube.RemoveAt(cube.Count - 1);
-            cube[cube.Count - 1].transform.SetParent(null);
-            cube.RemoveAt(cube.Count - 1);
-            cube[cube.Count - 1].transform.SetParent(null);
-            cube.RemoveAt(cube.Count - 1);
-            
-            for (int i = 0; i < cube.Count; i++)
-            {
-                cube[i].GetComponent<CubeJump>().match(i, cube.Count - 1);
-            }
+            maleParent.GetComponent<Movement>().RampClimp();
 
         }
         if (other.gameObject.tag == "ordergate")
         {
-            for (int p = 0; p < cube.Count; p++)
-            {
-                if (cube[p].gameObject.tag == "orangeclone")
-                {
-                    stack = cube[k].gameObject;
-                    cube[k] = cube[p];
-                    cube[p] = stack;                                       
-                    k++;
-                }
-            }
-            for (int p = 0; p < cube.Count; p++)
-            {
-                if (cube[p].gameObject.tag == "blueclone")
-                {
-                    stack = cube[k].gameObject;
-                    cube[k] = cube[p];
-                    cube[p] = stack;                    
-                    k++;
-                }
-            }
-            for (int p = 0; p < cube.Count; p++)
-            {
-                if (cube[p].gameObject.tag == "yellowclone")
-                {
-                    stack = cube[k].gameObject;
-                    cube[k] = cube[p];
-                    cube[p] = stack;
-                    k++;
-                }
-            }
-            for (int i = 0; i < cube.Count; i++)
-            {
-                cube[i].GetComponent<CubeJump>().match(i, cube.Count - 1);
-                k = 0;
-            }
+            SortByColorsLookIndex();
         }
-        if(other.gameObject.tag == "randomgate")
+        if (other.gameObject.tag == "randomgate")
         {
-            for (int t = 0; t < cube.Count; t++)
-            {
-                randomValue = Random.Range(0, cube.Count - 1);
-                stack = cube[t];
-                cube[t] = cube[randomValue];
-                cube[randomValue] = stack;
-            }
-            for (int i = 0; i < cube.Count; i++)
-            {
-                cube[i].GetComponent<CubeJump>().match(i, cube.Count - 1);
-            }
-        }
+            RandomOrder();
+        }    
+            
+       
+        
         if (other.gameObject.tag == "lava")
         {
             
@@ -188,39 +88,138 @@ public class Collector : MonoBehaviour
             maleParent.GetComponent<Movement>().jump();
         }
     }
-    void create(GameObject color,GameObject cubeClone)
+    void CreateCube(string colorTagName)
     {
-        cubeClone = Instantiate(color, transform.position, transform.rotation);
-        cubeClone.gameObject.transform.parent = transform; 
-         
-        cubeClone.transform.DOPunchScale(new Vector3(1,0,1), 0.5f, 2, 1);
-      
-        cube.Add(cubeClone);
-
-               
-        for (int i = 0; i < cube.Count-1; i++)
+        if (colorTagName == "orange")
         {
-            cube[i].GetComponent<CubeJump>().jumpCube(i,cube.Count-1);
-            
+            CreateCubeColor(orangeCube );
+        }
+        if (colorTagName == "blue")
+        {
+            CreateCubeColor(blueCube);
+        }
+        if (colorTagName == "yellow")
+        {
+            CreateCubeColor(yellowCube);
+        }
+    }
+    void CreateCubeColor(GameObject colorCube)
+    {
+        cubeClone = Instantiate(colorCube, transform.position, transform.rotation);
+        cubeClone.gameObject.transform.parent = transform;
+        cubeClone.transform.DOPunchScale(new Vector3(1, 0, 1), 0.5f, 2, 1);
+        cube.Add(cubeClone);
+        CubeArrangement();
+       
+    }
+
+    void Obstacles(string obstacleHeight)
+    {
+        if(obstacleHeight== "obstacle1x")
+        {
+            CubesHitObstacles(1);
+        }
+        if (obstacleHeight == "obstacle2x")
+        {
+            CubesHitObstacles(2);
+        }
+        if (obstacleHeight == "obstacle3x")
+        {
+            CubesHitObstacles(3);
         }
 
     }
-    public void match(int index)
+    void CubesHitObstacles(int obstacleSize)
+    {
+        for (int i = 0; i < obstacleSize ; i++)
+        {            
+            cube[cube.Count - 1].transform.SetParent(null);
+            cube.RemoveAt(cube.Count - 1);
+           
+        }
+        //Invoke("CubeArrangement", 0.5f);
+        //CharPos((float)cube.Count / 2);
+
+    }
+    void SortByColorsLookIndex()
+    {
+
+        for (int p = 0; p < cube.Count; p++)
+        {
+            if (cube[p].gameObject.tag == "orangeclone")
+            {
+                stackCubeSortBy = cube[sortByIndexNumber].gameObject;
+                cube[sortByIndexNumber] = cube[p];
+                cube[p] = stackCubeSortBy;
+                sortByIndexNumber++;
+            }
+        }
+        for (int p = 0; p < cube.Count; p++)
+        {
+            if (cube[p].gameObject.tag == "blueclone")
+            {
+                stackCubeSortBy = cube[sortByIndexNumber].gameObject;
+                cube[sortByIndexNumber] = cube[p];
+                cube[p] = stackCubeSortBy;
+                sortByIndexNumber++;
+            }
+        }
+        for (int p = 0; p < cube.Count; p++)
+        {
+            if (cube[p].gameObject.tag == "yellowclone")
+            {
+                stackCubeSortBy = cube[sortByIndexNumber].gameObject;
+                cube[sortByIndexNumber] = cube[p];
+                cube[p] = stackCubeSortBy;
+                sortByIndexNumber++;
+            }
+        }
+        //for (int i = 0; i < cube.Count; i++)
+        //{
+        //    cube[i].GetComponent<CubeJump>().match(i, cube.Count - 1);
+        //    k = 0;
+        //}
+        CubeArrangement();
+        sortByIndexNumber = 0;
+    }
+
+
+    void SortByColors()
+    {
+
+    }
+    void RandomOrder()
+    {
+        for (int t = 0; t < cube.Count; t++)
+        {
+            randomValue = Random.Range(0, cube.Count - 1);
+            stackCubeSortBy = cube[t];
+            cube[t] = cube[randomValue];
+            cube[randomValue] = stackCubeSortBy;
+        }
+        CubeArrangement();
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void SameColorCheck(int index)
     {
        
         Destroy(cube[cube.Count-index]);
         Destroy(cube[(cube.Count-1)-index]);
-        Destroy(cube[(cube.Count-2)-index]);
-        cube.RemoveAt(cube.Count - index);
-        cube.RemoveAt(cube.Count  - index);
-        cube.RemoveAt(cube.Count - index);
-        height -= 1.5f;
-        characterRig.GetComponent<CharJump>().match(height);
-        for (int i = 0; i < cube.Count ; i++)
-        {
-            cube[i].GetComponent<CubeJump>().match(i, cube.Count - 1);
-        }
-
+        Destroy(cube[(cube.Count-2)-index]);             
+        
     }
     public void trailfollow()
     {
@@ -263,7 +262,33 @@ public class Collector : MonoBehaviour
         height = 0;
     }
         
+    void CharPos(float UpValue)
+    {        
+        characterRig.GetComponent<CharJump>().CharUpPos(UpValue);
+    }
+    void CubeArrangement()
+    {
+        for (int i = 0; i < cube.Count; i++)
+        {            
+            cube[i].GetComponent<CubeJump>().jumpCube(i, cube.Count - 1);
+        }
 
-    
+    }
+    void CubeListMissingRemoveCheck()
+    {        
+        for (int i = 0; i < cube.Count; i++)
+        {           
+            if (cube[i] == null)
+            {
+                cube.RemoveAt(i); 
+                CubeArrangement();
+                CharPos((float)cube.Count / 2);
+            }
+            
+        }
+    }
+
+
+
 
 }

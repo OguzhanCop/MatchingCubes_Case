@@ -7,42 +7,46 @@ public class YellowCube : MonoBehaviour
 {
     public GameObject instantiateDiamond;
     public GameObject diamond;
-    int counter;
-    int index;
+    int touchSameColor;
+    int indexList;
+    bool oneMore = true;
     GameObject Collector;
-    bool des = true;
+   
     void Start()
     {
         instantiateDiamond = GameObject.Find("InstantiateDia");
         Collector = GameObject.FindGameObjectWithTag("collector");
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        index = (int)transform.position.y;
-        if (counter == 2)
+        indexList = (int)transform.localPosition.y;
+        if (touchSameColor == 2)
+        {
+            Invoke("waitDestroy", 0.2f);
+            
 
-            Invoke("wait", 0.2f);
+        }
+            
 
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "yellowclone")
-            counter++;
+            touchSameColor++;
 
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "yellowclone")
-            counter--;
+            touchSameColor--;
     }
-    void wait()
+    void waitDestroy()
     {
-        if (des)
+        if (oneMore)
         {
-            des = false;
-            Collector.GetComponent<Collector>().match(index);
+            oneMore = false;
+            Collector.GetComponent<Collector>().SameColorCheck(indexList);
             instantiateDiamond.GetComponent<Diamond>().InstantiateDiamond(this.transform);
 
 
