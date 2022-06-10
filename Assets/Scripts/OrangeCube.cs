@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class OrangeCube : MonoBehaviour
 {
-    public GameObject instantiateDiamond;
+    GameObject instantiateDiamond;
     
     int touchSameColor;    
     int indexList;

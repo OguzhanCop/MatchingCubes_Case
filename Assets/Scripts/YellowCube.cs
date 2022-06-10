@@ -5,8 +5,8 @@ using UnityEngine;
 public class YellowCube : MonoBehaviour
 
 {
-    public GameObject instantiateDiamond;
-    public GameObject diamond;
+    GameObject instantiateDiamond;
+    
     int touchSameColor;
     int indexList;
     bool oneMore = true;

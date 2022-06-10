@@ -14,26 +14,26 @@ public class CubeJump : MonoBehaviour
     {
         DOTween.Init();
     }
-    public void match(int index,int count )
+    public void CubeDownPos(int index,int count )
     {
         transform.DOLocalMoveY(count - index, 0.4f, false);
       
     }
     
-    public void jumpCube(int index,int count)
+    public void CubeUpPos(int index,int count)
     {
         transform.DOLocalMoveY(count - index+0.5f, 0.2f, false);
         countCube = count;
         indexCube = index;
-        Invoke("fallCube", 0.4f);        
+        Invoke("FallCube", 0.4f);        
 
 
     }
-    public void fallCube()
+    public void FallCube()
     {
-        match(indexCube, countCube);       
+        CubeDownPos(indexCube, countCube);       
     }
-    public void burn(string colortag)
+    public void BurnCube(string colortag)
     {
         
         if (colortag == "blueclone")

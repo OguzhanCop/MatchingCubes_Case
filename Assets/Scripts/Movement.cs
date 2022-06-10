@@ -5,29 +5,49 @@ using DG.Tweening;
 
 public class Movement : MonoBehaviour
 {
+    public GameObject collector;
+    public GameObject characterRig;
     public float speed=5;
+    bool jumpPosCheck=false;
    
     
     void Start()
     {
-        DOTween.Init();
-        
-        
+        DOTween.Init();       
+
+               
     }
     void Update()
     {
-        transform.Translate(0, 0, speed*Time.deltaTime);
-
+        Move();
+        
+        TouchSlide();
+             
+        
+    }
+    void Move()
+    {
+        transform.Translate(0, 0, speed * Time.deltaTime);
+    }
+   void TouchSlide()
+    {
         if (Input.touchCount > 0)
         {
             Touch finger = Input.GetTouch(0);
-            turn(finger.deltaPosition.x);
-            clampX(transform.position);
+            Turn(finger.deltaPosition.x);
+            ClampX(transform.position);
             
-        }        
-        
+            
+
+        }
+
     }
-    void turn(float fingerdiff)
+    void ClampX(Vector3 pos)
+    {
+        pos.x = Mathf.Clamp(transform.position.x, -2, 2);
+        transform.position = pos;
+    }
+    void Turn(float fingerdiff)
     {
         if (fingerdiff != 0)
         {
@@ -35,11 +55,7 @@ public class Movement : MonoBehaviour
         }
 
     }
-    void clampX(Vector3 pos)
-    {
-        pos.x = Mathf.Clamp(transform.position.x, -2, 2);
-        transform.position = pos;
-    }
+    
     public void RampClimp()
     {
 
@@ -51,29 +67,56 @@ public class Movement : MonoBehaviour
         transform.DOLocalMoveY(transform.position.y - 1.5f, 1.2f, false);
 
     }
-    public void speedBoost()
+    public void SpeedBoost()
     {
         speed = 20;
-        Invoke("speedDown", 1.5f);
+        Invoke("SpeedDown", 1.5f);
     }
-    public void speedDown()
+    public void SpeedDown()
     {
         speed = 5;
     }
-    public void jump()
+    public void JumpBoost()
     {
-        speed = 15f;
+        speed = 15f;        
         transform.DOLocalMoveY(transform.position.y + 10f, 1.5f, false);
-        Invoke("Down", 1.5f);
+        JumpPosChar();
+        Invoke("JumpDown", 1.5f);
     }
-    public void Down()
+    public void JumpDown()
     {
         transform.DOLocalMoveY(transform.position.y - 10f, 1.5f, false);
         Invoke("DownSpeed", 1.5f);
     }
     public void DownSpeed()
     {
+        
+        speed = 5;
+        jumpPosCheck = false;
+    }
+    public void FeverModeStart()
+    {
+        collector.GetComponent<Collector>().FeverModeStartControl();
+        speed = 20f;
+        Invoke("FeverModeStop", 1.5f);
+    }
+    void FeverModeStop()
+    {
+        collector.GetComponent<Collector>().FeverModeStopControl();
         speed = 5;
     }
+    public void SurferPosChar()
+    {
+        if (jumpPosCheck == false)
+        {
+            characterRig.transform.DORotateQuaternion(Quaternion.Euler(-90, 60, 90), 1F);
+        }      
 
+    }
+    void JumpPosChar()
+    {
+        jumpPosCheck = true;
+        characterRig.transform.DORotateQuaternion(Quaternion.Euler(0, 0, 90), 1F);
+        
+    }
 }

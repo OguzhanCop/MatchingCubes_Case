@@ -23,6 +23,7 @@ TagManager:
   - lava
   - speedboost
   - jump
+  - finish
   layers:
   - Default
   - TransparentFX

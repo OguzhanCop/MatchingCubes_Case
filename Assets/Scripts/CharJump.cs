@@ -5,48 +5,30 @@ using DG.Tweening;
 
 public class CharJump : MonoBehaviour
 {
-    public GameObject button;
-    float charPosY;
-    float height;
+    
+    float charPosY;    
     void Start()
     {
         DOTween.Init();
         charPosY = transform.localPosition.y;
         
     }    
-    void Update()
-    {
-        
-        //height = PlayerPrefs.GetFloat("height");
-        PlayerDead();
-
-    }
-    public void match(float value)
+  
+    public void CharDownPos(float value)
     {        
-        transform.DOLocalMoveY(charPosY+value, 0.2f, false);
+        transform.DOLocalMoveY(charPosY+value, 0.5f, false);
     }
     public void CharUpPos(float height )
     {        
         transform.DOLocalMoveY(charPosY + height +1.5f, 0.4f, false);
-        StartCoroutine(Fall(height));
-        //Invoke("fall", 0.4f);
+        StartCoroutine(CharFall(height));       
     }   
     
-    IEnumerator Fall(float height)
+    IEnumerator CharFall(float height)
     {
         yield return new WaitForSecondsRealtime(0.4f);
-        match(height);
+        CharDownPos(height);
     }
-    public void PlayerDead()
-    {
-        if (height < 0)
-        {
-            Time.timeScale = 0;
-            button.GetComponent<PlayButton>().restartgame();
-
-
-        }
-          
-    }
+    
 
 }

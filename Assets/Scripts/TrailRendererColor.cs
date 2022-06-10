@@ -6,12 +6,12 @@ public class TrailRendererColor : MonoBehaviour
 {
     
    
-    public void color(Material color)
+    public void Color(Material color)
     {
         this.GetComponent<TrailRenderer>().material = color;       
 
     }
-    public void trail(Transform cube)
+    public void TrailFollow(Transform cube)
     {
         transform.position = cube.transform.position;
         transform.parent = cube.transform;
